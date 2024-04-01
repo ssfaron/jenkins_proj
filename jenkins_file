@@ -5,13 +5,15 @@ pipeline{
     }
     stages{
         stage("MVN Test"){
-            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ssfaron/jenkins_proj']])
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ssfaron/jenkins_proj']])
 
-            bat "mvn -version"
+                bat "mvn -version"
 
-            dir("C:\Users\Sarah Smallwood\Desktop\grad_school\CSI_5324\Assignments\Week 12\CICD\jenkins_proj\jenkins_proj")(
-                bat "mvn clean install"
-            )
+                dir("C:\Users\Sarah Smallwood\Desktop\grad_school\CSI_5324\Assignments\Week 12\CICD\jenkins_proj\jenkins_proj")(
+                    bat "mvn clean install"
+                )
+            }
         }
 
         stage("Build the basic docker file"){

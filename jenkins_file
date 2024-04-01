@@ -1,0 +1,41 @@
+pipeline{
+    agent any
+    tools{
+        maven "maven_3_9_6"
+    }
+    stages{
+        stage("MVN Test"){
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ssfaron/jenkins_proj']])
+
+            bat "mvn -version"
+
+            dir("C:\Users\Sarah Smallwood\Desktop\grad_school\CSI_5324\Assignments\Week 12\CICD\jenkins_proj\jenkins_proj")(
+                bat "mvn clean install"
+            )
+        }
+
+        stage("Build the basic docker file"){
+            steps{
+                dir("C:\Users\Sarah Smallwood\Desktop\grad_school\CSI_5324\Assignments\Week 12\CICD\jenkins_proj\jenkins_proj")(
+                    bat "docker build -t ssfaron/jenkins_hub ."
+                )
+            }
+        }
+
+        stage("Push image to dockerhub"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: '4f49dd9c-44d4-470e-bcbc-f497d62b0af2', variable: 'password')]){
+                        bat "docker login -u ssfaron -p %password%"
+                        bat "docker push ssfaron/jenkins_hub"
+                    }
+                }
+            }
+        }
+    }
+    post{
+        always{
+            clearWs()
+        }
+    }
+}

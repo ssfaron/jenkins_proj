@@ -10,7 +10,7 @@ pipeline{
 
                 bat "mvn -version"
 
-                dir("C:\Users\Sarah Smallwood\Desktop\grad_school\CSI_5324\Assignments\Week 12\CICD\jenkins_proj\jenkins_proj")(
+                dir("C:/Users/Sarah Smallwood/Desktop/grad_school/CSI_5324/Assignments/Week 12/CICD/jenkins_proj/jenkins_proj")(
                     bat "mvn clean install"
                 )
             }
@@ -18,7 +18,7 @@ pipeline{
 
         stage("Build the basic docker file"){
             steps{
-                dir("C:\Users\Sarah Smallwood\Desktop\grad_school\CSI_5324\Assignments\Week 12\CICD\jenkins_proj\jenkins_proj")(
+                dir("C:/Users/Sarah Smallwood/Desktop/grad_school/CSI_5324/Assignments/Week 12/CICD/jenkins_proj/jenkins_proj")(
                     bat "docker build -t ssfaron/jenkins_hub ."
                 )
             }
